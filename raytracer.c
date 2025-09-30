@@ -8,12 +8,6 @@
 #include <time.h>
 #include <stdio.h>
 
-static double now_ms(void) {
-    struct timespec ts;
-    clock_gettime(CLOCK_MONOTONIC, &ts);
-    return (double)ts.tv_sec * 1000.0 + (double)ts.tv_nsec / 1.0e6;
-}
-
 #define RED (struct Color){ 240, 20, 20, 255 }
 #define GREEN (struct Color){ 20, 240, 20, 255 }
 #define BLUE (struct Color){ 20, 20, 240, 255 }
@@ -96,7 +90,6 @@ int main(void)
 
     while(true)
     {
-        double start = now_ms();
         struct World* world = CreateWorld();
         struct Camera* camera = CreateCamera();
 
@@ -120,9 +113,6 @@ int main(void)
 
         free(world);
         free(camera);
-
-        double end = now_ms();
-        printf("Frame took %.3f ms (%.1f FPS)\n", end - start, 1000.0 / (end - start));
     }
 
 }
